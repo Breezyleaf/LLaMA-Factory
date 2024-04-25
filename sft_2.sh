@@ -1,0 +1,27 @@
+deepspeed --include localhost:0,1,2,5 src/train_bash.py \
+    --deepspeed stage2.json \
+    --stage pt \
+    --model_name_or_path /data/vision-models/llm/phi3/LLM-Research/Phi-3-mini-128k-instruct \
+    --do_train \
+    --dataset_dir ./data/HR/CPT \
+    --dataset hr_data,zhihu_kol,wanjuan,minipile  \
+    --template phi \
+    --finetuning_type lora \
+    --lora_target all  \
+    --lora_rank 16 \
+    --use_dora True \
+    --output_dir pt_phi3 \
+    --overwrite_cache \
+    --warmup_steps  50  \
+    --weight_decay  0.1 \
+    --per_device_train_batch_size 16 \
+    --gradient_accumulation_steps 1 \
+    --lr_scheduler_type cosine \
+    --logging_steps 10 \
+    --save_steps 1000 \
+    --learning_rate 8e-5 \
+    --num_train_epochs 2.0 \
+    --flash_attn t \
+    --plot_loss \
+    --save_safetensors false \
+    --overwrite_output_dir true

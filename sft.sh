@@ -1,0 +1,25 @@
+deepspeed --include localhost:4,5 src/train_bash.py \
+    --deepspeed stage2.json \
+    --stage sft \
+    --model_name_or_path /data/vision-models/llm/phi3/LLM-Research/Phi-3-mini-128k-instruct\
+    --do_train \
+    --dataset  planner_4 \
+    --template phi \
+    --finetuning_type lora \
+    --lora_target all  \
+    --lora_rank 16 \
+    --use_dora True \
+    --output_dir chang_planner_dora_phi3 \
+    --overwrite_cache \
+    --warmup_steps  5  \
+    --weight_decay  0.1 \
+    --per_device_train_batch_size 8 \
+    --gradient_accumulation_steps 4 \
+    --lr_scheduler_type cosine \
+    --logging_steps 10 \
+    --save_steps 50 \
+    --learning_rate 4e-4 \
+    --num_train_epochs 20.0 \
+    --plot_loss \
+    --save_safetensors false \
+    --overwrite_output_dir true
